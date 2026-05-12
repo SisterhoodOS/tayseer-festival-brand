@@ -810,6 +810,52 @@
       .vm-tall { grid-row: span 1; }
     }
 
+    /* ── VISION PHOTO GRID (3×3 mood board) ── */
+    .vision-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      background: #040406;
+      border-top: 3px solid #040406;
+    }
+
+    .vpg-cell {
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1/1;
+    }
+
+    .vpg-cell::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    .vpg-cell:hover::after { opacity: 0.2; }
+
+    #akasha  .vpg-cell::after { background: #9B6FFF; }
+    #tessera .vpg-cell::after { background: #C4622D; }
+    #musubi  .vpg-cell::after { background: #C41E3A; }
+    #kumomi  .vpg-cell::after { background: #7AA8CC; }
+    #luvsic  .vpg-cell::after { background: #FF8C42; }
+    #naga    .vpg-cell::after { background: #C9A84C; }
+
+    .vpg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.7) brightness(0.85);
+      transition: transform 0.45s ease, filter 0.3s ease;
+    }
+    .vpg-cell:hover .vpg-img {
+      transform: scale(1.05);
+      filter: saturate(1.1) brightness(1.0);
+    }
+
     /* ── TEXTURE PATTERN for TESSERA ── */
     .tessera-pattern {
       position: absolute;
@@ -1141,6 +1187,18 @@
         </div>
 
       </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-LAUu-KapZA4?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+      </div>
     </div>
 
     <div class="brand-footer">
@@ -1371,7 +1429,7 @@
           <div class="vm-desc">Not a design system. A fired ceramic. Each element carries the memory of its making. The mosaic only reveals itself from a distance.</div>
         </div>
 
-        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,20,0,0.35)), url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,20,0,0.35)), url('https://images.unsplash.com/photo-2vrMeWxbOec?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
           <div class="vm-tag">Reference: Ottoman Pattern</div>
           <div class="vm-name" style="font-family: 'Playfair Display', serif; font-size: clamp(18px, 2.5vw, 26px);">Iznik Tilework</div>
           <div class="vm-desc">16th century. Geometry as devotion. Fired at 1,200 degrees. Every tile mathematically exact. Together, a cosmos.</div>
@@ -1382,7 +1440,7 @@
           <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Fired Terracotta</div>
         </div>
 
-        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,40,0,0.28)), url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,40,0,0.28)), url('https://images.unsplash.com/photo-69BlmJ1m5Do?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
           <div class="vm-tag">Light Reference</div>
           <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Lantern Night Market</div>
         </div>
@@ -1413,6 +1471,18 @@
           <div class="vm-quote-text" style="font-family: 'Playfair Display', serif; font-size: clamp(16px, 2.2vw, 28px);">"Everything broken has an edge. Everything with an edge catches light."</div>
         </div>
 
+      </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-b7gi_rqKxcQ?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-69BlmJ1m5Do?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-2vrMeWxbOec?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
 
@@ -1641,6 +1711,18 @@
         </div>
 
       </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-JCGE51UEL2A?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-PaJ7973iKAI?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+      </div>
     </div>
 
     <div class="brand-footer" style="background: #08080F;">
@@ -1868,6 +1950,18 @@
         </div>
 
       </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1501854140801-50d01698950b?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-ubwn8GI9-2o?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1499346030926-9a72daac6c63?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+      </div>
     </div>
 
     <div class="brand-footer" style="background: #080D14;">
@@ -2046,7 +2140,7 @@
       </div>
       <div class="vision-masonry">
 
-        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,30,0,0.32)), url('https://images.unsplash.com/photo-1540039155733-5bb30b4f2e2f?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,30,0,0.32)), url('https://images.unsplash.com/photo-k9BTg4ViqwM?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
           <div class="vm-tag">Atmosphere</div>
           <div class="vm-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 3.5vw, 50px);">Love Floor</div>
           <div class="vm-desc">3am. Amber light. The sound system carrying every feeling you didn't know you had. Nobody leaves. Nobody wants to.</div>
@@ -2094,6 +2188,18 @@
           <div class="vm-quote-text" style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: clamp(16px, 2.2vw, 28px);">"Love is a music problem. We just haven't found the right frequency yet."</div>
         </div>
 
+      </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-k9BTg4ViqwM?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
 
@@ -2283,7 +2389,7 @@
           <div class="vm-desc">Naga balustrade. The serpent that guards the gateway. You cross it knowing you will not return the same. Architecture as living mythology.</div>
         </div>
 
-        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,40,0,0.28)), url('https://images.unsplash.com/photo-1541873676-a18294552051?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,40,0,0.28)), url('https://images.unsplash.com/photo-p9Pmrjwl7ko?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
           <div class="vm-tag">Surface</div>
           <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(18px, 2.5vw, 26px);">Gold Leaf on Ancient Stone</div>
           <div class="vm-desc">Applied by hand to impermanent surfaces. Gold as devotion, not decoration. That which decorates the sacred teaches what is sacred.</div>
@@ -2304,7 +2410,7 @@
           <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Naga Scale</div>
         </div>
 
-        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1582560474992-385ebb9b6e9e?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-bhMTpo4lUIo?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
           <div class="vm-tag">The Attendee</div>
           <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(16px, 2.2vw, 26px);">The Threshold Crosser</div>
           <div class="vm-desc">Not adventurous for the sake of stories. Crosses thresholds because staying is no longer possible. This festival is a crossing point, not a destination.</div>
@@ -2325,6 +2431,18 @@
           <div class="vm-quote-text" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.2vw, 28px);">"The serpent does not guard the path to keep you out. It guards the path to ensure you arrive changed."</div>
         </div>
 
+      </div>
+
+      <div class="vision-photo-grid">
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-fpWZBtvRYwE?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-p9Pmrjwl7ko?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-KpBAYMNf9Tw?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
+        <div class="vpg-cell"><img class="vpg-img" loading="lazy" src="https://images.unsplash.com/photo-bhMTpo4lUIo?fm=jpg&q=85&w=700&auto=format&fit=crop" alt=""></div>
       </div>
     </div>
 
