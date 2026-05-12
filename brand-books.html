@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Festival Brand Books</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;500;600;700;800&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-h: 64px;
+      --transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #080810;
+      color: #F5F0E8;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(8, 8, 16, 0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      gap: 0;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-right: 48px;
+      white-space: nowrap;
+    }
+
+    .nav-select-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    #brand-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 6px;
+      color: rgba(245,240,232,0.85);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 9px 40px 9px 16px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #brand-select:hover,
+    #brand-select:focus { border-color: rgba(255,255,255,0.32); }
+
+    #brand-select option {
+      background: #14141A;
+      color: #F2EFE8;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-chevron {
+      position: absolute;
+      right: 12px;
+      width: 14px;
+      height: 14px;
+      color: rgba(245,240,232,0.45);
+      pointer-events: none;
+    }
+
+    /* ── BRAND SECTIONS ── */
+    .brand-book {
+      display: none;
+      padding-top: var(--nav-h);
+    }
+    .brand-book.active { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--hero-bg, #080810);
+      z-index: 0;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, var(--hero-glow, transparent) 0%, transparent 70%);
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0.8;
+    }
+
+    .hero-name {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: clamp(80px, 14vw, 200px);
+      font-weight: var(--display-weight, 300);
+      line-height: 0.9;
+      letter-spacing: var(--display-tracking, -0.02em);
+      color: var(--hero-name-color, #F5F0E8);
+      margin-bottom: 40px;
+    }
+
+    .hero-tagline {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--accent);
+      max-width: 680px;
+      margin: 0 auto 48px;
+      opacity: 0.9;
+    }
+
+    .hero-sub {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.7);
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      margin: 0 auto 40px;
+      opacity: 0.4;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 120px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-full {
+      padding: 120px 40px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0.7;
+    }
+
+    .section-title {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #F5F0E8;
+      margin-bottom: 32px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,240,232,0.65);
+      max-width: 680px;
+    }
+
+    .section-body p + p { margin-top: 20px; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    @media (max-width: 900px) {
+      .two-col { grid-template-columns: 1fr; gap: 48px; }
+      .three-col { grid-template-columns: 1fr; }
+    }
+
+    /* ── SEPARATOR ── */
+    .sep {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 0;
+    }
+
+    /* ── COLOR PALETTE ── */
+    .palette-section {
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .palette-row {
+      display: flex;
+      gap: 0;
+    }
+
+    .palette-swatch {
+      flex: 1;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .swatch-name {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      mix-blend-mode: difference;
+      filter: invert(1);
+    }
+
+    .swatch-hex {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      mix-blend-mode: difference;
+      filter: invert(1);
+      opacity: 0.7;
+    }
+
+    .swatch-role {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      mix-blend-mode: difference;
+      filter: invert(1);
+      opacity: 0.5;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .type-showcase {
+      padding: 100px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .type-specimen {
+      margin-bottom: 64px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .type-specimen:last-child { border-bottom: none; }
+
+    .type-meta {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 24px;
+      align-items: baseline;
+    }
+
+    .type-role {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.8;
+    }
+
+    .type-info {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(245,240,232,0.68);
+      letter-spacing: 0.1em;
+    }
+
+    .type-purchase {
+      font-size: 10px;
+      color: var(--accent);
+      opacity: 0.6;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .type-display-sample {
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: 1;
+      color: #F5F0E8;
+    }
+
+    .type-body-sample {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.7);
+      max-width: 640px;
+    }
+
+    .type-accent-sample {
+      font-size: clamp(28px, 4vw, 56px);
+      line-height: 1.2;
+      font-style: italic;
+      color: rgba(245,240,232,0.8);
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .experience-card {
+      background: #080810;
+      padding: 48px 40px;
+    }
+
+    .exp-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+
+    .exp-name {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: #F5F0E8;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .exp-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.75);
+    }
+
+    /* ── BRAND WORLD / PILLARS ── */
+    .pillar {
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pillar:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .pillar-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 4px;
+    }
+
+    .pillar-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,240,232,0.82);
+    }
+
+    .pillar-quote {
+      font-family: 'Crimson Pro', serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-style: italic;
+      color: #F5F0E8;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    /* ── VISUAL DIRECTION ── */
+    .visual-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .v-tag {
+      padding: 8px 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .v-tag.accent-tag {
+      border-color: var(--accent);
+      color: var(--accent);
+      opacity: 0.8;
+    }
+
+    /* ── STATS / NUMBERS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.04);
+      margin: 80px 0 0;
+    }
+
+    .stat {
+      background: #080810;
+      padding: 48px 32px;
+    }
+
+    .stat-number {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: 56px;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.7);
+    }
+
+    /* ── TRADEMARK FLAG ── */
+    .trademark-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255, 181, 71, 0.08);
+      border: 1px solid rgba(255, 181, 71, 0.25);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: #FFB547;
+      margin-bottom: 40px;
+    }
+
+    .trademark-notice::before {
+      content: '⚠';
+      font-size: 12px;
+    }
+
+    /* ── FOOTER / CLOSE ── */
+    .brand-footer {
+      padding: 80px 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-name {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.1);
+    }
+
+    .footer-meta {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      text-align: right;
+      line-height: 2;
+    }
+
+    /* ════════════════════════════════════════
+       BRAND THEMES
+    ════════════════════════════════════════ */
+
+    /* AKASHA */
+    #akasha {
+      --accent: #9B6FFF;
+      --accent2: #C9A84C;
+      --hero-bg: #060610;
+      --hero-glow: rgba(123, 79, 255, 0.15);
+      --display-font: 'Cormorant Garamond';
+      --display-weight: 300;
+      --display-tracking: -0.02em;
+      --hero-name-color: #F5F0E8;
+    }
+
+    /* TESSERA */
+    #tessera {
+      --accent: #C4622D;
+      --accent2: #C4993C;
+      --hero-bg: #0D0A08;
+      --hero-glow: rgba(196, 98, 45, 0.12);
+      --display-font: 'Playfair Display';
+      --display-weight: 400;
+      --display-tracking: -0.01em;
+      --hero-name-color: #F5E6C8;
+    }
+
+    /* MUSUBI */
+    #musubi {
+      --accent: #C41E3A;
+      --accent2: #C4A45A;
+      --hero-bg: #08080F;
+      --hero-glow: rgba(196, 30, 58, 0.1);
+      --display-font: 'Shippori Mincho';
+      --display-weight: 400;
+      --display-tracking: 0.05em;
+      --hero-name-color: #F5F0E0;
+    }
+
+    /* KUMOMI */
+    #kumomi {
+      --accent: #7AA8CC;
+      --accent2: #D4B896;
+      --hero-bg: #080D14;
+      --hero-glow: rgba(122, 168, 204, 0.12);
+      --display-font: 'DM Serif Display';
+      --display-weight: 400;
+      --display-tracking: -0.01em;
+      --hero-name-color: #EEF4FA;
+    }
+
+    /* LUVSIC */
+    #luvsic {
+      --accent: #FF8C42;
+      --accent2: #C4622D;
+      --hero-bg: #0E0A08;
+      --hero-glow: rgba(255, 140, 66, 0.1);
+      --display-font: 'Space Grotesk';
+      --display-weight: 700;
+      --display-tracking: -0.04em;
+      --hero-name-color: #F5F0E0;
+    }
+
+    /* NAGA */
+    #naga {
+      --accent: #C9A84C;
+      --accent2: #2D8C7A;
+      --hero-bg: #060E0A;
+      --hero-glow: rgba(45, 140, 122, 0.12);
+      --display-font: 'Cormorant Garamond';
+      --display-weight: 300;
+      --display-tracking: 0.08em;
+      --hero-name-color: #EDF5F0;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      z-index: 1;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+      animation: scrollpulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollpulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(1.2); }
+    }
+
+    /* ── THE PEOPLE / AUDIENCE ── */
+    .attendee-card {
+      border-left: 2px solid var(--accent);
+      padding: 32px 0 32px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .attendee-card:last-child { border-bottom: none; }
+
+    .attendee-num {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .attendee-name {
+      font-family: var(--display-font, 'Cormorant Garamond'), serif;
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 300;
+      color: #F5F0E8;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .attendee-details {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px 32px;
+      max-width: 780px;
+    }
+
+    .attendee-dt {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.7;
+      padding-top: 3px;
+    }
+
+    .attendee-dd {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.78);
+    }
+
+    @media (max-width: 700px) {
+      .attendee-details { grid-template-columns: 1fr; gap: 4px 0; }
+      .attendee-dt { margin-top: 12px; }
+      .attendee-card { padding-left: 20px; }
+    }
+
+    /* ── VISION BOARD (Pinterest Masonry) ── */
+    .vision-board { border-top: 1px solid rgba(255,255,255,0.06); }
+
+    .vision-board-intro {
+      padding: 80px 40px 56px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .vision-masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 210px;
+      gap: 3px;
+      background: #040406;
+    }
+
+    .vm-big  { grid-column: span 2; grid-row: span 2; }
+    .vm-tall { grid-column: span 1; grid-row: span 2; }
+    .vm-wide { grid-column: span 2; }
+    .vm-sm   { grid-column: span 1; }
+
+    .vm-cell {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px 26px;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .vm-cell:hover { transform: scale(1.02); z-index: 2; }
+
+    .vm-cell::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 45%, transparent 75%);
+      pointer-events: none;
+    }
+
+    .vm-cell > * { position: relative; z-index: 2; }
+
+    .vm-tag {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.65);
+      margin-bottom: 7px;
+    }
+
+    .vm-name {
+      font-weight: 300;
+      line-height: 1.2;
+      color: #F5F0E8;
+      margin-bottom: 7px;
+    }
+
+    .vm-desc {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.7);
+      max-width: 320px;
+    }
+
+    .vm-cell.vm-quote {
+      justify-content: center;
+      padding: 30px 36px;
+    }
+
+    .vm-quote-text {
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.45;
+      color: rgba(245,240,232,0.88);
+    }
+
+    .vm-ghost {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(70px, 12vw, 130px);
+      font-weight: 300;
+      opacity: 0.08;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .vision-masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 190px; }
+      .vm-big  { grid-column: span 2; }
+      .vm-wide { grid-column: span 2; }
+    }
+
+    @media (max-width: 540px) {
+      .vision-masonry { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+      .vm-big, .vm-wide { grid-column: span 1; }
+      .vm-tall { grid-row: span 1; }
+    }
+
+    /* ── TEXTURE PATTERN for TESSERA ── */
+    .tessera-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(45deg, #C4622D 0, #C4622D 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, #C4993C 0, #C4993C 1px, transparent 0, transparent 50%);
+      background-size: 20px 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <span class="nav-logo">Festival Brand Books</span>
+    <div class="nav-select-wrap">
+      <select id="brand-select" onchange="activate(this.value)">
+        <option value="akasha">AKASHA</option>
+        <option value="tessera">TESSERA</option>
+        <option value="musubi">MUSUBI</option>
+        <option value="kumomi">KUMOMI</option>
+        <option value="luvsic">LUVSIC</option>
+        <option value="naga">NAGA ⚠</option>
+      </select>
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════
+       AKASHA
+  ════════════════════════════════════ -->
+  <section class="brand-book active" id="akasha">
+
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <p class="hero-eyebrow">Thailand · Edition I · 5,000 Souls</p>
+      <h1 class="hero-name">AKASHA</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">The ether that contains all things. Every memory. Every sound that was ever made. You don't attend. You access it.</p>
+      <p class="hero-sub">Sanskrit · आकाश · The Fifth Element</p>
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Story -->
+    <div class="section two-col">
+      <div>
+        <p class="section-label">The Story</p>
+        <h2 class="section-title">Before sound. Before light. Before form.</h2>
+      </div>
+      <div class="section-body">
+        <p>In Vedic philosophy, Akasha is the fifth and most fundamental element — the ether from which the other four emerge. It is not empty. It contains everything: every sound ever made, every thought ever had, every moment ever felt. The Akashic Records are the cosmic archive of all existence.</p>
+        <p>AKASHA festival is the human attempt to access that frequency. Three days. 5,000 people. One collective vibration built from global artists, immersive worlds, and the radical belief that music — at its deepest — is not entertainment. It is memory. It is retrieval. It is access.</p>
+        <p>The first edition opens in Thailand. Not because Thailand is convenient. Because Thailand is a place where the boundary between the seen and unseen is genuinely thin. The jungle holds it. The temples hold it. The people hold it.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Color Palette -->
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #060610;">
+          <div class="swatch-name">Void</div>
+          <div class="swatch-hex">#060610</div>
+          <div class="swatch-role">Primary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #140B3C;">
+          <div class="swatch-name">Deep Indigo</div>
+          <div class="swatch-hex">#140B3C</div>
+          <div class="swatch-role">Secondary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #7B4FFF;">
+          <div class="swatch-name">Electric Violet</div>
+          <div class="swatch-hex">#7B4FFF</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #C9A84C;">
+          <div class="swatch-name">Cosmic Gold</div>
+          <div class="swatch-hex">#C9A84C</div>
+          <div class="swatch-role">Secondary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #F5F0E8; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Pearl</div>
+          <div class="swatch-hex">#F5F0E8</div>
+          <div class="swatch-role">Text / Light</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <!-- Typography -->
+    <div class="type-showcase">
+      <p class="section-label" style="color: #9B6FFF;">Typography System</p>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role">Display</span>
+          <span class="type-info">Cormorant Garamond · 300 · Approximation only</span>
+          <span class="type-purchase">Purchase: PP Editorial New — Pangram Pangram Foundry</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; letter-spacing: -0.02em;">
+          Akasha
+        </div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role">Editorial / Subheads</span>
+          <span class="type-info">Crimson Pro Italic · 300 · Approximation only</span>
+          <span class="type-purchase">Purchase: Canela Text — Klim Type Foundry (klim.co.nz)</span>
+        </div>
+        <div class="type-accent-sample" style="font-family: 'Crimson Pro', serif; font-weight: 300; font-style: italic; font-size: clamp(24px, 3vw, 48px); color: rgba(245,240,232,0.8);">
+          The ether that contains all things
+        </div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role">Body / Interface</span>
+          <span class="type-info">Inter · 300 · Approximation only</span>
+          <span class="type-purchase">Purchase: Neue Montreal — Pangram Pangram Foundry</span>
+        </div>
+        <div class="type-body-sample">
+          Three days. 5,000 souls. One collective frequency assembled from artists who carry the sound of every culture the world has ever made.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Experience -->
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label">The Experience</p>
+      <h2 class="section-title">Three Days. One Journey.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card">
+        <div class="exp-number">Day 01</div>
+        <div class="exp-name">Arrival & Opening Ceremony</div>
+        <div class="exp-desc">The collective settles into the land. Organic house and ambient drift as 5,000 people tune to the same frequency. The immersive art world opens at dusk. Sound healers in the forest. The first DJs play long, unbroken sets at lower BPM — this is the descent, not the peak.</div>
+      </div>
+      <div class="experience-card">
+        <div class="exp-number">Day 02</div>
+        <div class="exp-name">The Deep</div>
+        <div class="exp-desc">Peak programming. All art activations fully alive. The main stage holds three-hour DJ journeys from global artists — no schedule interruptions, no 45-minute slots. The crowd rides the full wave. Midnight ritual installation. Dawn session for those who remain.</div>
+      </div>
+      <div class="experience-card">
+        <div class="exp-number">Day 03</div>
+        <div class="exp-name">Integration</div>
+        <div class="exp-desc">The BPM descends slowly. Ambient artists. Slower movement. The integration is as curated as the peak. You are not abandoned on the way back. The closing ceremony returns everyone to the body. You leave changed, not wrecked.</div>
+      </div>
+      <div class="experience-card">
+        <div class="exp-number">Always</div>
+        <div class="exp-name">The Records</div>
+        <div class="exp-desc">Akashic Records are the cosmic archive. AKASHA's permanent archive — film, audio, art documentation — is released to attendees 60 days post-festival. What happened here does not disappear. It joins the record.</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" style="margin: 2px 0 0;">
+      <div class="stat">
+        <div class="stat-number" style="color: #9B6FFF;">5,000</div>
+        <div class="stat-label">Maximum Attendance</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" style="color: #9B6FFF;">3hr</div>
+        <div class="stat-label">Minimum DJ Set Length</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" style="color: #9B6FFF;">3</div>
+        <div class="stat-label">Days of Programming</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" style="color: #9B6FFF;">∞</div>
+        <div class="stat-label">Dimensions Accessed</div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 2px;">
+
+    <!-- Brand World -->
+    <div class="section">
+      <p class="section-label">Brand World</p>
+      <div class="pillar">
+        <div class="pillar-grid">
+          <div class="pillar-label">Philosophy</div>
+          <div class="pillar-text">
+            <div class="pillar-quote">"Music is not entertainment. It is memory. It is retrieval."</div>
+            AKASHA operates on the belief that sound is the oldest technology for accessing altered states. Every culture on Earth discovered this independently. We gather them in one place and let what emerges emerge.
+          </div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-grid">
+          <div class="pillar-label">Curation</div>
+          <div class="pillar-text">Artists are curated across 6 continents. The programme runs from India, Japan, Middle East, West Africa, South America, and Southeast Asia — not as token representation, but as equal pillars of the sound. The headline is the lineup as a whole, not a name.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-grid">
+          <div class="pillar-label">Visual Identity</div>
+          <div class="pillar-text">Sacred geometry in gold on near-black. Cosmic and microscopic imagery at equal scale — nebulae and electron microscopy occupy the same visual language. Silk installations that catch and transform light. Dark environments punctuated by precise gold illumination. No neon. No LED walls.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-grid">
+          <div class="pillar-label">Positioning</div>
+          <div class="pillar-text">Competes with Day Zero in cultural depth. Surpasses it in immersive art ambition. Art Basel would cover it. Burning Man people would feel at home. The crowd is culturally curious, globally traveled, 28–50. They attend Wonderfruit, Cercle, and Unsound. They do not attend EDC.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Tags -->
+    <div class="section" style="padding-top: 0;">
+      <p class="section-label">Visual Direction</p>
+      <div class="visual-tags">
+        <span class="v-tag accent-tag">Sacred Geometry</span>
+        <span class="v-tag accent-tag">Cosmic Scale</span>
+        <span class="v-tag">Gold on Black</span>
+        <span class="v-tag">Microscopic Imagery</span>
+        <span class="v-tag">Silk Installations</span>
+        <span class="v-tag">Temple Architecture</span>
+        <span class="v-tag accent-tag">No Neon</span>
+        <span class="v-tag">Forest + Water</span>
+        <span class="v-tag">Vedic Pattern Systems</span>
+        <span class="v-tag">Deep Shadow</span>
+        <span class="v-tag accent-tag">Precise Illumination</span>
+        <span class="v-tag">Collector Posters</span>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label">The People</p>
+      <h2 class="section-title">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name">The Deep Traveler</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Has been to Burning Man, to Boom, to Epizode in Vietnam. Meditates. Probably has a sound healing practice or a sincere Vedic astrology reading. Not looking for another festival. Looking for the one.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Bangkok right now. Has seen the AKASHA brief. Forwarded it to three people who would never understand it and one who immediately bought a ticket.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">A festival that goes as deep as they do. That doesn't flinch. Three-hour sets are the minimum requirement. The Akashic Records concept is not metaphor to them — it is orientation.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name">The Threshold Walker</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Something major changed. A company sold. A marriage ended. A version of themselves they had outgrown. They are in the between time and need a ceremony for it, not a vacation.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Has learned to recognize the specific feeling of being called somewhere. Read the AKASHA brand text at 11pm and didn't close the tab. Still hasn't closed it.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">Three days in the ether. Not to escape what happened. To access the frequency that was always underneath it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label">Vision Board</p>
+        <h2 class="section-title">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(155,111,255,0.18)), url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Atmosphere</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 50px);">Above the Veil</div>
+          <div class="vm-desc">Night sky over Northern Thailand. Altitude 800m. Every star visible. The sound system carries further up here.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(20,0,80,0.35)), url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Visual Language</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.5vw, 26px);">The Pattern That Holds</div>
+          <div class="vm-desc">Vedic geometry. The shape that exists before sound. Drawn at a scale where the atomic and the galactic are the same diagram.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #B088FF 0%, #9B6FFF 45%, #7040E0 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Akashic Purple</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,20,0,0.35)), url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Opening Ceremony</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Five Thousand Faces, One Fire</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Location</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Chiang Mai Highlands</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 2.2vw, 26px);">The Seeker in Motion</div>
+          <div class="vm-desc">Philosopher. Night swimmer. Has meditated in three traditions. Not a tourist of the self. Looking for the festival that goes as deep as they do.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #E8C87A 0%, #C9A84C 50%, #9A7A28 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Ritual Gold</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #09060F; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'Cormorant Garamond', serif; color: #9B6FFF;">A</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 1.8vw, 18px);">Cormorant Garamond Light</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 30% 60%, rgba(155,111,255,0.12) 0%, transparent 55%), #0A0718;">
+          <div class="vm-quote-text" style="font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 2.2vw, 28px);">"Some sounds are remembered. These are meant to dissolve you. And reassemble you differently."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer">
+      <div class="footer-name">AKASHA</div>
+      <div class="footer-meta">
+        Edition I · Thailand · 2026<br>
+        Class 41 · Entertainment Services<br>
+        Trademark Status: CLEAR
+      </div>
+    </div>
+
+  </section><!-- /akasha -->
+
+
+  <!-- ════════════════════════════════════
+       TESSERA
+  ════════════════════════════════════ -->
+  <section class="brand-book" id="tessera">
+
+    <div class="hero" style="background: #0D0A08;">
+      <div class="hero-bg" style="background: #0D0A08;"></div>
+      <div class="tessera-pattern"></div>
+      <p class="hero-eyebrow">Thailand · Edition I · 5,000 Tiles</p>
+      <h1 class="hero-name" style="font-family: 'Playfair Display', serif; font-weight: 400; letter-spacing: -0.01em; color: #F5E6C8;">TESSERA</h1>
+      <div class="hero-divider" style="background: linear-gradient(to bottom, #C4622D, transparent);"></div>
+      <p class="hero-tagline" style="color: #C4622D;">A tessera is a single tile. Without it, the picture cannot be completed. You are one tile. We need all 5,000 of you.</p>
+      <p class="hero-sub">Latin · A Piece of the Mosaic · Each Person, Essential</p>
+      <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section two-col">
+      <div>
+        <p class="section-label" style="color: #C4622D;">The Story</p>
+        <h2 class="section-title" style="font-family: 'Playfair Display', serif;">Each tile. One picture. Never the same twice.</h2>
+      </div>
+      <div class="section-body">
+        <p>A tessera is the smallest unit of a mosaic — one ceramic tile, one piece of glass, one fragment of stone. A mosaic cannot exist without every single one. Remove one tile and you see the gap.</p>
+        <p>TESSERA is built on that principle. The 5,000 people who attend are not audience. They are material. The festival only becomes what it is because those specific 5,000 people are present. The same lineup in an empty field is not TESSERA.</p>
+        <p>The first edition opens in Thailand — a country whose culture is itself a living mosaic of Theravada Buddhism, Brahmanical influence, indigenous animism, and the convergence of every trading culture that ever moved through Southeast Asia. The original tessera.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- Palette -->
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label" style="color: #C4622D;">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #F5E6C8; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Warm Cream</div>
+          <div class="swatch-hex">#F5E6C8</div>
+          <div class="swatch-role">Primary Light</div>
+        </div>
+        <div class="palette-swatch" style="background: #C4622D;">
+          <div class="swatch-name">Terracotta</div>
+          <div class="swatch-hex">#C4622D</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #2D5016;">
+          <div class="swatch-name">Forest</div>
+          <div class="swatch-hex">#2D5016</div>
+          <div class="swatch-role">Secondary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #8B1A1A;">
+          <div class="swatch-name">Deep Crimson</div>
+          <div class="swatch-hex">#8B1A1A</div>
+          <div class="swatch-role">Deep Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #C4993C;">
+          <div class="swatch-name">Antique Gold</div>
+          <div class="swatch-hex">#C4993C</div>
+          <div class="swatch-role">Metallic Accent</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <!-- Typography -->
+    <div class="type-showcase">
+      <p class="section-label" style="color: #C4622D;">Typography System</p>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C4622D;">Display</span>
+          <span class="type-info">Playfair Display · 400 · Approximation only</span>
+          <span class="type-purchase" style="color: #C4622D;">Purchase: Canela Text — Klim Type Foundry (klim.co.nz)</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'Playfair Display', serif; font-weight: 400; color: #F5E6C8;">
+          Tessera
+        </div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C4622D;">Editorial</span>
+          <span class="type-info">Crimson Pro Italic · Approximation only</span>
+          <span class="type-purchase" style="color: #C4622D;">Purchase: Domaine Display — Klim Type Foundry</span>
+        </div>
+        <div class="type-accent-sample" style="font-family: 'Crimson Pro', serif; font-weight: 300; font-style: italic; color: #C4622D; opacity: 0.9;">
+          Each tile, irreplaceable
+        </div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C4622D;">Body</span>
+          <span class="type-info">Inter · 300 · Approximation only</span>
+          <span class="type-purchase" style="color: #C4622D;">Purchase: Suisse Int'l — Swiss Typefaces</span>
+        </div>
+        <div class="type-body-sample" style="color: rgba(245,230,200,0.65);">
+          The festival is the mosaic. You are one tile. We need all 5,000 of you to complete the picture.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label" style="color: #C4622D;">The Experience</p>
+      <h2 class="section-title" style="font-family: 'Playfair Display', serif;">Five Zones. One Complete Picture.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card" style="background: #0D0A08;">
+        <div class="exp-number" style="color: #C4622D;">Zone I</div>
+        <div class="exp-name" style="font-family: 'Playfair Display', serif;">The Loom</div>
+        <div class="exp-desc">The main stage. Where the full pattern becomes visible. Long-form DJ sets from global artists — each one a thread. The crowd is the loom.</div>
+      </div>
+      <div class="experience-card" style="background: #0D0A08;">
+        <div class="exp-number" style="color: #C4622D;">Zone II</div>
+        <div class="exp-name" style="font-family: 'Playfair Display', serif;">The Single</div>
+        <div class="exp-desc">The intimate stage. One artist. One story. One hour. No support acts. No DJ before or after. The complete performance as a single tile.</div>
+      </div>
+      <div class="experience-card" style="background: #0D0A08;">
+        <div class="exp-number" style="color: #C4622D;">Zone III</div>
+        <div class="exp-name" style="font-family: 'Playfair Display', serif;">The Maker's Quarter</div>
+        <div class="exp-desc">Live artists creating during the festival. Ceramicists, weavers, mosaic makers. The art is not installed before you arrive — it is made while you are here.</div>
+      </div>
+      <div class="experience-card" style="background: #0D0A08;">
+        <div class="exp-number" style="color: #C4622D;">Zone IV</div>
+        <div class="exp-name" style="font-family: 'Playfair Display', serif;">The Archive</div>
+        <div class="exp-desc">Documentation of each edition. The complete mosaic — all 5,000 tiles — catalogued in film, audio, and visual art. Issued to attendees as the official record.</div>
+      </div>
+    </div>
+
+    <div class="stats-row" style="margin: 2px 0 0;">
+      <div class="stat" style="background: #0D0A08;">
+        <div class="stat-number" style="color: #C4622D;">5,000</div>
+        <div class="stat-label">Tiles in the Mosaic</div>
+      </div>
+      <div class="stat" style="background: #0D0A08;">
+        <div class="stat-number" style="color: #C4622D;">6+</div>
+        <div class="stat-label">Continents Represented</div>
+      </div>
+      <div class="stat" style="background: #0D0A08;">
+        <div class="stat-number" style="color: #C4622D;">3</div>
+        <div class="stat-label">Days of Creation</div>
+      </div>
+      <div class="stat" style="background: #0D0A08;">
+        <div class="stat-number" style="color: #C4622D;">1</div>
+        <div class="stat-label">Irrepeatable Picture</div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 2px;">
+
+    <div class="section">
+      <p class="section-label" style="color: #C4622D;">Visual Direction</p>
+      <div class="visual-tags">
+        <span class="v-tag" style="border-color: rgba(196,98,45,0.3); color: #C4622D;">Rich Textile Pattern</span>
+        <span class="v-tag" style="border-color: rgba(196,98,45,0.3); color: #C4622D;">Paisley & Botanical</span>
+        <span class="v-tag">Earthy Warm Palette</span>
+        <span class="v-tag">Woven Art Installations</span>
+        <span class="v-tag">Each Edition Has Its Own Pattern</span>
+        <span class="v-tag" style="border-color: rgba(196,98,45,0.3); color: #C4622D;">Global Artisan Market</span>
+        <span class="v-tag">Ceramic & Mosaic Art</span>
+        <span class="v-tag">Hand-printed Poster Series</span>
+        <span class="v-tag">Collector Editions</span>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label" style="color: #C4622D;">The People</p>
+      <h2 class="section-title" style="font-family: 'Playfair Display', serif;">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name" style="font-family: 'Playfair Display', serif;">The Cultural Cartographer</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Lives in three cities simultaneously. Curates with precision — art, music, friends, objects. Would rather have one irreplaceable thing than many acceptable ones. Has looked up the Latin origin of "tessera" without being prompted.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Saved the TESSERA concept. Noticed the mosaic philosophy immediately. Has already started thinking about which friend group to bring as which tiles.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">The experience that cannot be replicated. The specific picture that only these 5,000 people could make, at this location, in this year. The one you were actually there for.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name" style="font-family: 'Playfair Display', serif;">The Maker Who Needs Witnesses</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Ceramicist. Textile artist. Independent designer. Does the real work in private, shows it rarely. Comes to festivals not to consume but to be in the company of other people doing the same.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Tired of festivals that use art as decor — something to photograph in front of, not something being made. Has been looking for the Maker's Quarter without knowing that name for it.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">Zone III. To watch something come into existence and know their presence was part of the mosaic that made it possible.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label" style="color: #C4622D;">Vision Board</p>
+        <h2 class="section-title" style="font-family: 'Playfair Display', serif;">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,30,0,0.28)), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Visual Language</div>
+          <div class="vm-name" style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 50px);">The Fragment Finds Its Place</div>
+          <div class="vm-desc">Not a design system. A fired ceramic. Each element carries the memory of its making. The mosaic only reveals itself from a distance.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,20,0,0.35)), url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Reference: Ottoman Pattern</div>
+          <div class="vm-name" style="font-family: 'Playfair Display', serif; font-size: clamp(18px, 2.5vw, 26px);">Iznik Tilework</div>
+          <div class="vm-desc">16th century. Geometry as devotion. Fired at 1,200 degrees. Every tile mathematically exact. Together, a cosmos.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #D4784A 0%, #C4622D 50%, #9A4418 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Fired Terracotta</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,40,0,0.28)), url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Light Reference</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Lantern Night Market</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,30,0,0.28)), url('https://images.unsplash.com/photo-1557683316-973673baf926?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Textile</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Thai Silk Brocade</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'Playfair Display', serif; font-size: clamp(16px, 2.2vw, 26px);">The Cultural Cartographer</div>
+          <div class="vm-desc">Has a passport that tells a story. Comes to festivals the way others visit libraries. Looking for the fragment that completes the picture they have been assembling for years.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #D4B060 0%, #C9A050 50%, #9A7828 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Hammered Gold</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #0D0A07; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'Playfair Display', serif; color: #C4622D;">T</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'Playfair Display', serif; font-size: clamp(14px, 1.8vw, 18px);">Playfair Display Light</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 70% 30%, rgba(196,98,45,0.1) 0%, transparent 50%), #0F0C08;">
+          <div class="vm-quote-text" style="font-family: 'Playfair Display', serif; font-size: clamp(16px, 2.2vw, 28px);">"Everything broken has an edge. Everything with an edge catches light."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer" style="background: #0D0A08;">
+      <div class="footer-name" style="font-family: 'Playfair Display', serif; color: rgba(245,230,200,0.08);">TESSERA</div>
+      <div class="footer-meta">Edition I · Thailand · 2026<br>Class 41 · Entertainment Services<br>Trademark Status: CLEAR</div>
+    </div>
+
+  </section><!-- /tessera -->
+
+
+  <!-- ════════════════════════════════════
+       MUSUBI
+  ════════════════════════════════════ -->
+  <section class="brand-book" id="musubi">
+
+    <div class="hero" style="background: #08080F;">
+      <div class="hero-bg" style="background: #08080F;"></div>
+      <p class="hero-eyebrow" style="color: #C41E3A;">Thailand · Edition I · 5,000 Connections</p>
+      <h1 class="hero-name" style="font-family: 'Shippori Mincho', serif; font-weight: 400; letter-spacing: 0.05em; color: #F5F0E0;">MUSUBI</h1>
+      <div class="hero-divider" style="background: linear-gradient(to bottom, #C41E3A, transparent);"></div>
+      <p class="hero-tagline" style="color: rgba(245,240,224,0.7);">結び — The sacred act of binding. The invisible thread between people, between worlds, between a note and the soul that receives it.</p>
+      <p class="hero-sub" style="color: rgba(255,255,255,0.25);">Japanese · 結び · Sacred Connection</p>
+      <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section two-col">
+      <div>
+        <p class="section-label" style="color: #C41E3A;">The Story</p>
+        <h2 class="section-title" style="font-family: 'Shippori Mincho', serif;">The thread that was already there.</h2>
+      </div>
+      <div class="section-body">
+        <p>In Japanese, musubi (結び) is not simply a knot or a connection. It is the sacred act of binding — the force that holds the universe together at the level where things become other things. Miyazaki called it the thread that connects all living beings across time and space.</p>
+        <p>MUSUBI festival operates on this principle. You do not go to listen. You go to be connected — to the artists, to the 4,999 other people, to the land, to the specific combination of light and sound and presence that this and only this gathering creates.</p>
+        <p>The thread is already there. MUSUBI makes it visible.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label" style="color: #C41E3A;">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #1A1A2E;">
+          <div class="swatch-name">Ink Black</div>
+          <div class="swatch-hex">#1A1A2E</div>
+          <div class="swatch-role">Primary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #4A7C59;">
+          <div class="swatch-name">Bamboo</div>
+          <div class="swatch-hex">#4A7C59</div>
+          <div class="swatch-role">Secondary</div>
+        </div>
+        <div class="palette-swatch" style="background: #C41E3A;">
+          <div class="swatch-name">Temple Red</div>
+          <div class="swatch-hex">#C41E3A</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #C4A45A;">
+          <div class="swatch-name">Brushed Gold</div>
+          <div class="swatch-hex">#C4A45A</div>
+          <div class="swatch-role">Metallic Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #F5F0E0; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Warm Ivory</div>
+          <div class="swatch-hex">#F5F0E0</div>
+          <div class="swatch-role">Text / Light</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <div class="type-showcase">
+      <p class="section-label" style="color: #C41E3A;">Typography System</p>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C41E3A;">Display</span>
+          <span class="type-info">Shippori Mincho · 400 · Authentic Japanese feel</span>
+          <span class="type-purchase" style="color: #C41E3A;">Purchase: Kinuta Mincho — TypeBank or Morisawa (for premium weight set)</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'Shippori Mincho', serif; font-weight: 400; letter-spacing: 0.05em;">
+          Musubi
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C41E3A;">Accent / Japanese Script</span>
+          <span class="type-info">Shippori Mincho · 800</span>
+          <span class="type-purchase" style="color: #C41E3A;">Purchase: A-OTF Ryumin — Morisawa</span>
+        </div>
+        <div style="font-family: 'Shippori Mincho', serif; font-weight: 800; font-size: clamp(40px, 6vw, 80px); color: #C41E3A; opacity: 0.8; letter-spacing: 0.1em;">
+          結び
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C41E3A;">Body</span>
+          <span class="type-info">Inter · 300</span>
+          <span class="type-purchase" style="color: #C41E3A;">Purchase: Neue Haas Unica — Linotype</span>
+        </div>
+        <div class="type-body-sample" style="color: rgba(245,240,224,0.65);">
+          The thread is already there. MUSUBI makes it visible across three days of sound, art, and the radical act of being present.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label" style="color: #C41E3A;">The Experience</p>
+      <h2 class="section-title" style="font-family: 'Shippori Mincho', serif;">Four Knots. One Thread.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card" style="background: #08080F;">
+        <div class="exp-number" style="color: #C41E3A;">The Thread</div>
+        <div class="exp-name" style="font-family: 'Shippori Mincho', serif;">Main Stage</div>
+        <div class="exp-desc">Three-hour minimum sets. No interruptions. The binding happens here. DJs from Japan, South Korea, India, Indonesia, Thailand — each carrying a thread.</div>
+      </div>
+      <div class="experience-card" style="background: #08080F;">
+        <div class="exp-number" style="color: #C41E3A;">The Knot</div>
+        <div class="exp-name" style="font-family: 'Shippori Mincho', serif;">Intimate Stage</div>
+        <div class="exp-desc">Smaller. Deeper. The connections that happen here are not fleeting. Capacity limited to 400.</div>
+      </div>
+      <div class="experience-card" style="background: #08080F;">
+        <div class="exp-number" style="color: #C41E3A;">The Weaving</div>
+        <div class="exp-name" style="font-family: 'Shippori Mincho', serif;">Immersive Art</div>
+        <div class="exp-desc">Where the threads become visible. Red string installations, textile art, fiber sculpture. The physical made from the invisible.</div>
+      </div>
+      <div class="experience-card" style="background: #08080F;">
+        <div class="exp-number" style="color: #C41E3A;">Silence Zones</div>
+        <div class="exp-name" style="font-family: 'Shippori Mincho', serif;">No Sound</div>
+        <div class="exp-desc">The most courageous offering. Zones where connection happens without music. Only presence. The thread needs no sound.</div>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label" style="color: #C41E3A;">The People</p>
+      <h2 class="section-title" style="font-family: 'Shippori Mincho', serif;">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name" style="font-family: 'Shippori Mincho', serif;">The Solitary Joiner</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Comes to festivals alone. Has a practice. Studies Japanese aesthetics or Buddhist philosophy not as a hobby but as orientation. Knows exactly what wabi-sabi means and feels it physically. Has the full Hiroshi Watanabe discography.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">The word musubi made them stop scrolling. Has been following Cercle. The red thread concept has been in their mind for three days unprompted.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">To be in the presence of 5,000 people and feel genuinely connected rather than merely surrounded. The thread that makes the crowd into something more than a crowd.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name" style="font-family: 'Shippori Mincho', serif;">The Quietly Fluent</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Works in architecture, film, design, or music. Aesthetics are a language for them, not a preference. Notices the wrong font. Cannot un-notice it. Holds the kind of silence that makes other people nervous.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">The MUSUBI concept art resonated not as style but as fluency. They recognized what was being said beneath the visual, which almost never happens.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">An environment that matches their internal standard. The silence zones. The weaving. An experience that doesn't require them to explain why it matters.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label" style="color: #C41E3A;">Vision Board</p>
+        <h2 class="section-title" style="font-family: 'Shippori Mincho', serif;">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(100,0,20,0.28)), url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Visual Concept</div>
+          <div class="vm-name" style="font-family: 'Shippori Mincho', serif; font-size: clamp(28px, 3.5vw, 50px);">The Invisible Thread</div>
+          <div class="vm-desc">Musubi. The act of tying. The thread that connects two people across a lifetime without their knowledge. You feel it here before you understand it.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(80,0,20,0.28)), url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Architecture</div>
+          <div class="vm-name" style="font-family: 'Shippori Mincho', serif; font-size: clamp(18px, 2.5vw, 26px);">Torii at Dawn</div>
+          <div class="vm-desc">Gate between the ordinary and the sacred. Neither in nor out. You cross it knowing you will not return the same.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #E04060 0%, #C41E3A 50%, #901020 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Crimson Silk</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: radial-gradient(ellipse at 50% 50%, rgba(220,180,80,0.3) 0%, transparent 50%), repeating-linear-gradient(60deg, rgba(220,180,80,0.07) 0px 1px, transparent 1px 20px), #0C0A00;">
+          <div class="vm-tag">Philosophy</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Kintsugi</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,30,10,0.35)), url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Location</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Bamboo Forest Night</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'Shippori Mincho', serif; font-size: clamp(16px, 2.2vw, 26px);">The Solitary Joiner</div>
+          <div class="vm-desc">Not lonely — alone by preference. Comes to festivals to feel collective without losing individual. Dances alone in crowds. Leaves connected without knowing how.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #1A0018 0%, #0A0008 60%, #040004 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Ink Black</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #080008; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'Shippori Mincho', serif; color: #C41E3A;">結</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'Shippori Mincho', serif; font-size: clamp(14px, 1.8vw, 18px);">Shippori Mincho</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 30% 60%, rgba(196,30,58,0.1) 0%, transparent 50%), #0A0008;">
+          <div class="vm-quote-text" style="font-family: 'Shippori Mincho', serif; font-size: clamp(16px, 2.2vw, 28px);">"You will forget most of what happens here. The thread will remain."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer" style="background: #08080F;">
+      <div class="footer-name" style="font-family: 'Shippori Mincho', serif; color: rgba(245,240,224,0.06);">MUSUBI</div>
+      <div class="footer-meta">Edition I · Thailand · 2026<br>Class 41 · Entertainment Services<br>Trademark Status: CLEAR</div>
+    </div>
+
+  </section><!-- /musubi -->
+
+
+  <!-- ════════════════════════════════════
+       KUMOMI
+  ════════════════════════════════════ -->
+  <section class="brand-book" id="kumomi">
+
+    <div class="hero" style="background: #080D14;">
+      <div class="hero-bg" style="background: linear-gradient(180deg, #080D14 0%, #0D1520 100%);"></div>
+      <p class="hero-eyebrow" style="color: #7AA8CC;">Thailand · Edition I · 5,000 Visions</p>
+      <h1 class="hero-name" style="font-family: 'DM Serif Display', serif; font-weight: 400; color: #EEF4FA; letter-spacing: -0.01em;">KUMOMI</h1>
+      <div class="hero-divider" style="background: linear-gradient(to bottom, #7AA8CC, transparent);"></div>
+      <p class="hero-tagline" style="color: #7AA8CC;">Cloud-seeing. 5,000 people look at the same sky and see 5,000 different things. All of them real. All of them true.</p>
+      <p class="hero-sub" style="color: rgba(255,255,255,0.25);">Invented · 雲 (Cloud) · 見 (To See) · The Art of Looking Up</p>
+      <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section two-col">
+      <div>
+        <p class="section-label" style="color: #7AA8CC;">The Story</p>
+        <h2 class="section-title" style="font-family: 'DM Serif Display', serif;">What do you see?</h2>
+      </div>
+      <div class="section-body">
+        <p>Kumomi. The act of lying in a field and watching clouds form and dissolve and form again — seeing shapes that exist only in this light, at this moment, for this particular pair of eyes. The shape you see is not there. And it is completely real.</p>
+        <p>KUMOMI is built on subjective immersion. You and the person next to you are hearing the same music, standing in the same light, breathing the same air — and experiencing something entirely different. KUMOMI does not tell you what to feel. It provides the conditions. You provide the vision.</p>
+        <p>The name is invented — a blend of kumo (雲, cloud) and mi (見, to see). It belongs to no one language. Like the crowd, it comes from everywhere.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label" style="color: #7AA8CC;">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #080D14;">
+          <div class="swatch-name">Deep Sky</div>
+          <div class="swatch-hex">#080D14</div>
+          <div class="swatch-role">Primary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #B8C9D9;">
+          <div class="swatch-name">Pale Mist</div>
+          <div class="swatch-hex">#B8C9D9</div>
+          <div class="swatch-role">Cloud Tone</div>
+        </div>
+        <div class="palette-swatch" style="background: #7AA8CC;">
+          <div class="swatch-name">Sky Blue</div>
+          <div class="swatch-hex">#7AA8CC</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #F5E6D3; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Dawn Peach</div>
+          <div class="swatch-hex">#F5E6D3</div>
+          <div class="swatch-role">Warm Light</div>
+        </div>
+        <div class="palette-swatch" style="background: #D4B896;">
+          <div class="swatch-name">Warm Gold</div>
+          <div class="swatch-hex">#D4B896</div>
+          <div class="swatch-role">Metallic Accent</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <div class="type-showcase">
+      <p class="section-label" style="color: #7AA8CC;">Typography System</p>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #7AA8CC;">Display</span>
+          <span class="type-info">DM Serif Display · Approximation only</span>
+          <span class="type-purchase" style="color: #7AA8CC;">Purchase: Freight Display — GarageFonts (garagefonts.com)</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'DM Serif Display', serif; font-weight: 400; color: #EEF4FA;">
+          Kumomi
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #7AA8CC;">Editorial</span>
+          <span class="type-info">DM Serif Display Italic</span>
+          <span class="type-purchase" style="color: #7AA8CC;">Purchase: Freight Big — GarageFonts</span>
+        </div>
+        <div class="type-accent-sample" style="font-family: 'DM Serif Display', serif; font-style: italic; color: #7AA8CC; opacity: 0.85;">
+          What do you see?
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #7AA8CC;">Body</span>
+          <span class="type-info">Space Grotesk · 300</span>
+          <span class="type-purchase" style="color: #7AA8CC;">Purchase: Neue Montreal — Pangram Pangram</span>
+        </div>
+        <div class="type-body-sample" style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; color: rgba(238,244,250,0.6);">
+          KUMOMI does not tell you what to feel. It provides the conditions. You provide the vision.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label" style="color: #7AA8CC;">The Experience</p>
+      <h2 class="section-title" style="font-family: 'DM Serif Display', serif;">Sky. Drift. Seeing. Morning.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card" style="background: #080D14;">
+        <div class="exp-number" style="color: #7AA8CC;">Cloud Stage</div>
+        <div class="exp-name" style="font-family: 'DM Serif Display', serif;">Open Air Main</div>
+        <div class="exp-desc">Under the actual sky. Open-air, no ceiling, no roof. The weather is part of the experience. Cloud formations are part of the visual programme.</div>
+      </div>
+      <div class="experience-card" style="background: #080D14;">
+        <div class="exp-number" style="color: #7AA8CC;">The Drift</div>
+        <div class="exp-name" style="font-family: 'DM Serif Display', serif;">Ambient Zone</div>
+        <div class="exp-desc">Slow. Hypnotic. No peaks, no drops, no builds. Just the drift. The most underserved experience in festival programming.</div>
+      </div>
+      <div class="experience-card" style="background: #080D14;">
+        <div class="exp-number" style="color: #7AA8CC;">The Seeing Room</div>
+        <div class="exp-name" style="font-family: 'DM Serif Display', serif;">Immersive Art</div>
+        <div class="exp-desc">Works that require you to look — not glance. Artists curated for depth over spectacle. Forty minutes minimum per installation recommended.</div>
+      </div>
+      <div class="experience-card" style="background: #080D14;">
+        <div class="exp-number" style="color: #7AA8CC;">Morning Mist</div>
+        <div class="exp-name" style="font-family: 'DM Serif Display', serif;">Dawn Sessions</div>
+        <div class="exp-desc">Programming designed specifically for the hour when ground mist forms. Some experiences at KUMOMI only exist between 5–7am.</div>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label" style="color: #7AA8CC;">The People</p>
+      <h2 class="section-title" style="font-family: 'DM Serif Display', serif;">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name" style="font-family: 'DM Serif Display', serif;">The Recalibrator</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Goes to festivals the way other people go to therapy. Not to escape but to see clearly. Needs regular moments of genuine perspective shift to function at their actual level. Has been to NOMA Project. Attends Unsound. Respects any artist who treats ambient music like it deserves a full stage.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Has been waiting for a festival to programme the 5am fog session without apology. KUMOMI is the first time they've read a festival concept and not found the compromise.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">The Drift. The Seeing Room. The specific quality of light at 5am when ground mist forms. The experience that can only happen here, now, with this sky.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name" style="font-family: 'DM Serif Display', serif;">The Generous Introvert</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Thinks deeply, works collectively, needs solitude in proportion to their output. Festival culture usually gets this backwards. KUMOMI doesn't. Does not need to explain why they are staring at a cloud for twenty minutes.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Forwarded the concept to four people. Two already have tickets. Has not bought theirs yet because they are thinking about it slowly, which means yes.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">Forty minutes minimum per installation. Open sky. No architecture between them and the weather. The right to see something entirely different from the person standing next to them.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label" style="color: #7AA8CC;">Vision Board</p>
+        <h2 class="section-title" style="font-family: 'DM Serif Display', serif;">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(10,30,60,0.28)), url('https://images.unsplash.com/photo-1501854140801-50d01698950b?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Atmosphere</div>
+          <div class="vm-name" style="font-family: 'DM Serif Display', serif; font-size: clamp(28px, 3.5vw, 50px);">The Sky Before the Set</div>
+          <div class="vm-desc">Outdoor main stage. Cloud ceiling at 3,000m. No walls. The music goes upward. The sky is the ceiling and the ceiling is not a ceiling.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(10,20,40,0.35)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Visual Reference</div>
+          <div class="vm-name" style="font-family: 'DM Serif Display', serif; font-size: clamp(18px, 2.5vw, 26px);">Cumulus Study</div>
+          <div class="vm-desc">Soft physics. Weight without gravity. Five thousand people seeing five thousand different pictures from the same sky.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #9AC4E0 0%, #7AA8CC 50%, #5080A8 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Cloud Blue</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.45), rgba(60,30,0,0.28)), url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Light</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Golden Hour Set</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(10,20,40,0.28)), url('https://images.unsplash.com/photo-1426604966848-d7adac402bff?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Venue</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Open Field, Northern Thailand</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1499346030926-9a72daac6c63?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'DM Serif Display', serif; font-size: clamp(16px, 2.2vw, 26px);">The Recalibrator</div>
+          <div class="vm-desc">Arrives exhausted from a city that never stops. Comes to festivals to remember what silence sounds like. Leaves with a new set point. Comes back every year to reset it again.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #1A2838 0%, #0A1428 50%, #040810 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Midnight Field</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #080E18; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'DM Serif Display', serif; color: #7AA8CC;">K</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'DM Serif Display', serif; font-size: clamp(14px, 1.8vw, 18px);">DM Serif Display</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 70% 30%, rgba(122,168,204,0.1) 0%, transparent 50%), #0A1020;">
+          <div class="vm-quote-text" style="font-family: 'DM Serif Display', serif; font-size: clamp(16px, 2.2vw, 28px);">"Open air. Open ears. Open chest. The sky is the ceiling and the ceiling is not a ceiling."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer" style="background: #080D14;">
+      <div class="footer-name" style="font-family: 'DM Serif Display', serif; color: rgba(238,244,250,0.06);">KUMOMI</div>
+      <div class="footer-meta">Edition I · Thailand · 2026<br>Class 41 · Entertainment Services<br>Trademark Status: CLEAR</div>
+    </div>
+
+  </section><!-- /kumomi -->
+
+
+  <!-- ════════════════════════════════════
+       LUVSIC
+  ════════════════════════════════════ -->
+  <section class="brand-book" id="luvsic">
+
+    <div class="hero" style="background: #0E0A08;">
+      <div class="hero-bg" style="background: #0E0A08;"></div>
+      <p class="hero-eyebrow" style="color: #FF8C42;">Thailand · Edition I · 5,000 Afflicted</p>
+      <h1 class="hero-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.04em; color: #F5F0E0; font-size: clamp(60px, 10vw, 160px);">LUVSIC</h1>
+      <div class="hero-divider" style="background: linear-gradient(to bottom, #FF8C42, transparent);"></div>
+      <p class="hero-tagline" style="color: rgba(245,240,224,0.7);">To be sick — consumed — with love for sound, for humanity, for the specific feeling of a set that changes you permanently. There is no cure. There was never meant to be.</p>
+      <p class="hero-sub" style="color: rgba(255,255,255,0.2);">Music Culture · After Nujabes · Luv(sic) · The Beautiful Affliction</p>
+      <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section two-col">
+      <div>
+        <p class="section-label" style="color: #FF8C42;">The Story</p>
+        <h2 class="section-title" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em;">You still feel it. That set. That night.</h2>
+      </div>
+      <div class="section-body">
+        <p>Nujabes called it Luv(sic). That condition. Being so consumed with love for music that it becomes a wound — a beautiful, permanent wound that never stops feeling exactly like it did the first time.</p>
+        <p>LUVSIC is the festival for people who have never recovered. Who can trace their trajectory back to a single set, a single song, a single moment when something cracked open. Who would give anything to feel that again. Who, in their deepest honesty, are not sure they want it to stop.</p>
+        <p>The festival is built around the three-hour set — not as format, but as philosophical position. Music is not an opening act for itself. It is the thing. Give it time. Let it build. Ride the full wave. That is LUVSIC.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label" style="color: #FF8C42;">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #1A1410;">
+          <div class="swatch-name">Warm Black</div>
+          <div class="swatch-hex">#1A1410</div>
+          <div class="swatch-role">Primary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #6B1F2E;">
+          <div class="swatch-name">Deep Burgundy</div>
+          <div class="swatch-hex">#6B1F2E</div>
+          <div class="swatch-role">Secondary</div>
+        </div>
+        <div class="palette-swatch" style="background: #FF8C42;">
+          <div class="swatch-name">Electric Amber</div>
+          <div class="swatch-hex">#FF8C42</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #F5F0E0; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Parchment</div>
+          <div class="swatch-hex">#F5F0E0</div>
+          <div class="swatch-role">Text / Light</div>
+        </div>
+        <div class="palette-swatch" style="background: #2C2C2C;">
+          <div class="swatch-name">Smoke</div>
+          <div class="swatch-hex">#2C2C2C</div>
+          <div class="swatch-role">Tertiary Background</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <div class="type-showcase">
+      <p class="section-label" style="color: #FF8C42;">Typography System</p>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #FF8C42;">Display</span>
+          <span class="type-info">Space Grotesk · 700 · Approximation only</span>
+          <span class="type-purchase" style="color: #FF8C42;">Purchase: Druk Wide — Commercial Type (commercialtype.com)</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.04em; color: #F5F0E0;">
+          LUVSIC
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #FF8C42;">Mono / Label</span>
+          <span class="type-info">Space Grotesk · 300 · Used for tracklist, setlist, credits</span>
+          <span class="type-purchase" style="color: #FF8C42;">Purchase: Söhne Mono — Klim Type Foundry</span>
+        </div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: 20px; letter-spacing: 0.15em; color: rgba(245,240,224,0.5); text-transform: uppercase; line-height: 2;">
+          Three Hours — No Interruption — Full Wave
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #FF8C42;">Body</span>
+          <span class="type-info">Inter · 300</span>
+          <span class="type-purchase" style="color: #FF8C42;">Purchase: Neue Montreal — Pangram Pangram</span>
+        </div>
+        <div class="type-body-sample" style="color: rgba(245,240,224,0.6);">
+          You still feel it. That set. That night. That exact moment when the drop came and something in you decided it was not going to be the same after this.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label" style="color: #FF8C42;">The Experience</p>
+      <h2 class="section-title" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">The Wound. The After. The Cure.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card" style="background: #1A1410;">
+        <div class="exp-number" style="color: #FF8C42;">The Wound</div>
+        <div class="exp-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">Main Stage</div>
+        <div class="exp-desc">Three-hour minimum. The stage name is the philosophy. This is where you remember what the affliction feels like. No 45-minute slots. No opener warming up a crowd. Just the artist and the set.</div>
+      </div>
+      <div class="experience-card" style="background: #1A1410;">
+        <div class="exp-number" style="color: #FF8C42;">Crate Corner</div>
+        <div class="exp-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">Vinyl & Deep Cuts</div>
+        <div class="exp-desc">For the obsessives. Live B2B sets, rare vinyl, the music that exists at the edge of what most people have heard. Where the genuinely afflicted gather.</div>
+      </div>
+      <div class="experience-card" style="background: #1A1410;">
+        <div class="exp-number" style="color: #FF8C42;">The After</div>
+        <div class="exp-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">Sunrise Stage</div>
+        <div class="exp-desc">For those who cannot leave. The music does not stop at 6am. It continues. Slower. The After is for the genuinely afflicted who need to hear it all the way through.</div>
+      </div>
+      <div class="experience-card" style="background: #1A1410;">
+        <div class="exp-number" style="color: #FF8C42;">The Cure</div>
+        <div class="exp-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">Morning Ambient</div>
+        <div class="exp-desc">The descent. Ambient programming to bring you back. The cure is not a cure — it just holds you long enough that you can remember how to be in your body.</div>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label" style="color: #FF8C42;">The People</p>
+      <h2 class="section-title" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em;">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">The Afflicted</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Has missed flights for sets. Has the receipts. Unapologetic. The conversation that always, eventually, returns to music. Nujabes is not a discovery — it was the beginning. Has crates of vinyl in a humid climate, which is a commitment.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Was already tracking who was playing LUVSIC before there was an official announcement. Has sources. The three-hour set policy is not a feature to them — it is the baseline they have been demanding for years.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">The crate corner. The amber light. The 4am beach hour for those who cannot leave. Artists who treat the set as an argument, not a performance.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600;">The Cultural Archivist</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Collects music the way others collect art. Maintains physical records in three countries. Values the deep cut over the banger, always, without apology. Has written short essays about setlist structure in their notes app.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Has already curated a pre-festival playlist to prepare. Has also written a private paragraph about what LUVSIC's name and philosophy means. This is how they process things that matter.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">The full wave. Not the peak. The wave. No algorithm recommended this night. They were there. The grain remembers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label" style="color: #FF8C42;">Vision Board</p>
+        <h2 class="section-title" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.02em;">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,30,0,0.32)), url('https://images.unsplash.com/photo-1540039155733-5bb30b4f2e2f?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Atmosphere</div>
+          <div class="vm-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 3.5vw, 50px);">Love Floor</div>
+          <div class="vm-desc">3am. Amber light. The sound system carrying every feeling you didn't know you had. Nobody leaves. Nobody wants to.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,20,0,0.35)), url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Icon</div>
+          <div class="vm-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(18px, 2.5vw, 26px);">The Record</div>
+          <div class="vm-desc">Analog. Physical. The fingertip knowledge no algorithm replicates. The set starts in the crate, not the software.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #FFB060 0%, #FF8C42 50%, #D05818 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Amber Heat</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(60,20,0,0.28)), url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Reference</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">The Intimate Room</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(30,10,0,0.28)), url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">After Hours</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Beach at 4am</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(16px, 2.2vw, 26px);">The Afflicted</div>
+          <div class="vm-desc">Caught by music at age 14 and never fully recovered. Comes not to find something but to confirm what they already know: this is the only religion that makes sense to them.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #FFF5E8 0%, #F0D8C0 50%, #D0B898 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px); color: #1A1008;">Warm Cream</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #0C0804; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #FF8C42;">L</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(14px, 1.8vw, 18px);">Space Grotesk</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 30% 60%, rgba(255,140,66,0.1) 0%, transparent 50%), #0E0A06;">
+          <div class="vm-quote-text" style="font-family: 'Space Grotesk', sans-serif; font-weight: 300; font-size: clamp(16px, 2.2vw, 28px);">"Love is a music problem. We just haven't found the right frequency yet."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer" style="background: #1A1410;">
+      <div class="footer-name" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: rgba(245,240,224,0.05);">LUVSIC</div>
+      <div class="footer-meta">Edition I · Thailand · 2026<br>Class 41 · Entertainment Services<br>Trademark Status: CLEAR</div>
+    </div>
+
+  </section><!-- /luvsic -->
+
+
+  <!-- ════════════════════════════════════
+       NAGA
+  ════════════════════════════════════ -->
+  <section class="brand-book" id="naga">
+
+    <div class="hero" style="background: #060E0A;">
+      <div class="hero-bg" style="background: #060E0A;"></div>
+      <div class="trademark-notice" style="position: relative; z-index: 1; margin-bottom: 32px;">
+        Trademark Caution — Geographic association with Nagaland, India. Attorney review recommended before filing.
+      </div>
+      <p class="hero-eyebrow" style="color: #C9A84C;">Thailand · Edition I · 5,000 Who Pass Through</p>
+      <h1 class="hero-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; letter-spacing: 0.08em; color: #EDF5F0;">NAGA</h1>
+      <div class="hero-divider" style="background: linear-gradient(to bottom, #C9A84C, transparent);"></div>
+      <p class="hero-tagline" style="color: rgba(201,168,76,0.85);">The sacred serpent does not attack. It tests. Only those who approach with reverence may pass. To arrive here, you must want to transform.</p>
+      <p class="hero-sub" style="color: rgba(255,255,255,0.25);">Thai/Sanskrit · นาค · Guardian of the Threshold</p>
+      <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section two-col">
+      <div>
+        <p class="section-label" style="color: #C9A84C;">The Story</p>
+        <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300;">The serpent guards what is worth protecting.</h2>
+      </div>
+      <div class="section-body">
+        <p>In Thai mythology, the Naga is the sacred serpent deity who coils at the threshold between worlds — the staircase of the temple, the bank of the sacred river, the moment before you enter what cannot be entered lightly. It does not block. It tests. Those who arrive in ego are turned back. Those who arrive in reverence pass through.</p>
+        <p>NAGA is not a festival you stumble into. It is a festival you decide to enter. The gate is the first part of the experience — and not everyone walks through it the same way.</p>
+        <p>The first edition opens in Thailand, where the Naga is not mythology — it is living architecture, woven into every temple staircase, every river crossing, every threshold that matters.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div style="padding: 80px 0 0;">
+      <div class="section" style="padding-bottom: 40px;">
+        <p class="section-label" style="color: #C9A84C;">Color Palette</p>
+      </div>
+      <div class="palette-row">
+        <div class="palette-swatch" style="background: #060E0A;">
+          <div class="swatch-name">Sacred Dark</div>
+          <div class="swatch-hex">#060E0A</div>
+          <div class="swatch-role">Primary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #0D3B2E;">
+          <div class="swatch-name">Deep Emerald</div>
+          <div class="swatch-hex">#0D3B2E</div>
+          <div class="swatch-role">Secondary Background</div>
+        </div>
+        <div class="palette-swatch" style="background: #C9A84C;">
+          <div class="swatch-name">Sacred Gold</div>
+          <div class="swatch-hex">#C9A84C</div>
+          <div class="swatch-role">Primary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #2D8C7A;">
+          <div class="swatch-name">Iridescent Teal</div>
+          <div class="swatch-hex">#2D8C7A</div>
+          <div class="swatch-role">Secondary Accent</div>
+        </div>
+        <div class="palette-swatch" style="background: #EDF5F0; border: 1px solid rgba(0,0,0,0.05);">
+          <div class="swatch-name">Bone White</div>
+          <div class="swatch-hex">#EDF5F0</div>
+          <div class="swatch-role">Text / Light</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top: 0;">
+
+    <div class="type-showcase">
+      <p class="section-label" style="color: #C9A84C;">Typography System</p>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C9A84C;">Display</span>
+          <span class="type-info">Cormorant Garamond Italic · 300 · Approximation only</span>
+          <span class="type-purchase" style="color: #C9A84C;">Purchase: Migra — Pangram Pangram Foundry</span>
+        </div>
+        <div class="type-display-sample" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; letter-spacing: 0.08em; color: #EDF5F0;">
+          Naga
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C9A84C;">Thai Script Accent</span>
+          <span class="type-info">For bilingual brand applications</span>
+          <span class="type-purchase" style="color: #C9A84C;">Purchase: Boon — Cadson Demak (leading Thai type foundry)</span>
+        </div>
+        <div style="font-family: serif; font-size: clamp(32px, 5vw, 64px); color: #C9A84C; opacity: 0.8; letter-spacing: 0.05em; margin-bottom: 8px;">
+          นาค
+        </div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.2em; text-transform: uppercase;">Thai script rendering — requires Boon or Noto Sans Thai for production</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span class="type-role" style="color: #C9A84C;">Body</span>
+          <span class="type-info">Inter · 300</span>
+          <span class="type-purchase" style="color: #C9A84C;">Purchase: Neue Montreal — Pangram Pangram</span>
+        </div>
+        <div class="type-body-sample" style="color: rgba(237,245,240,0.6);">
+          The Naga does not attack. It tests. To arrive here, you must want to transform. The gate is the first part of the experience.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="section" style="padding-bottom: 0;">
+      <p class="section-label" style="color: #C9A84C;">The Experience</p>
+      <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Threshold. Coil. Water. Emergence.</h2>
+    </div>
+    <div class="experience-grid" style="margin-top: 40px;">
+      <div class="experience-card" style="background: #060E0A;">
+        <div class="exp-number" style="color: #C9A84C;">The Threshold</div>
+        <div class="exp-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Main Stage</div>
+        <div class="exp-desc">You cross it at the gate. The entrance to NAGA is the first immersive art installation. Temple-gate architecture. The crowd passes through it before they reach any sound.</div>
+      </div>
+      <div class="experience-card" style="background: #060E0A;">
+        <div class="exp-number" style="color: #C9A84C;">The Coil</div>
+        <div class="exp-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Immersive Maze</div>
+        <div class="exp-desc">A serpentine maze art installation. You do not exit the way you entered. The geometry of the Naga's coil — you travel its length to reach the center.</div>
+      </div>
+      <div class="experience-card" style="background: #060E0A;">
+        <div class="exp-number" style="color: #C9A84C;">Sacred Water</div>
+        <div class="exp-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Ambient · Water Feature</div>
+        <div class="exp-desc">The Naga is guardian of water. The ambient stage is built near the water element — river, lake, or man-made sacred water feature. The slowest, deepest programming.</div>
+      </div>
+      <div class="experience-card" style="background: #060E0A;">
+        <div class="exp-number" style="color: #C9A84C;">The Emergence</div>
+        <div class="exp-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Dawn Ceremony</div>
+        <div class="exp-desc">What you become on the other side. The closing ceremony at dawn. You entered NAGA to transform. The Emergence is where that transformation is honored.</div>
+      </div>
+    </div>
+
+    <!-- The People -->
+    <hr class="sep">
+    <div class="section">
+      <p class="section-label" style="color: #C9A84C;">The People</p>
+      <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">Who Comes Here</h2>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 01</div>
+        <div class="attendee-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">The Threshold Crosser</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Something just ended. A relationship. A decade. A version of themselves they had outgrown. They are in the in-between and need a container for it, not a distraction from it. NAGA is a ceremony. Not a vacation.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">Found NAGA during a night of not being able to sleep. Read the full concept. Stopped at the Naga mythology and felt something they recognized but cannot name. Told no one. Bought a ticket the next morning.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">The gate. The Coil. The sacred water at dusk. The Emergence ceremony at dawn where what happened over three days gets named. They enter to transform. They know it going in.</div>
+        </div>
+      </div>
+      <div class="attendee-card">
+        <div class="attendee-num">Attendee 02</div>
+        <div class="attendee-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">The Temple Scholar</div>
+        <div class="attendee-details">
+          <div class="attendee-dt">Who they are</div>
+          <div class="attendee-dd">Has studied Thai, Khmer, or Indian temple architecture — not as tourism but as devotion. Knows the name of the deity at the threshold before entering. Has been to Wat Phra Kaew many times and looked at the Naga balustraded staircase with specific, informed attention.</div>
+          <div class="attendee-dt">Where they are</div>
+          <div class="attendee-dd">The mythology resonated as lived knowledge, not aesthetic. Was checking whether the festival had gotten the lore right before deciding if this was a festival worth attending. It had.</div>
+          <div class="attendee-dt">What they need</div>
+          <div class="attendee-dd">A festival that took the source material seriously enough to build the entire architecture around it. Not as theme. As foundation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision Board -->
+    <div class="vision-board">
+      <div class="vision-board-intro">
+        <p class="section-label" style="color: #C9A84C;">Vision Board</p>
+        <h2 class="section-title" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;">The World in Reference</h2>
+      </div>
+      <div class="vision-masonry">
+
+        <div class="vm-cell vm-big" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(80,50,0,0.28)), url('https://images.unsplash.com/photo-1508009603885-50cf7c579365?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Visual Anchor</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(28px, 3.5vw, 50px);">The Threshold</div>
+          <div class="vm-desc">Naga balustrade. The serpent that guards the gateway. You cross it knowing you will not return the same. Architecture as living mythology.</div>
+        </div>
+
+        <div class="vm-cell vm-tall" style="background: linear-gradient(rgba(0,0,0,0.55), rgba(60,40,0,0.28)), url('https://images.unsplash.com/photo-1541873676-a18294552051?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Surface</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(18px, 2.5vw, 26px);">Gold Leaf on Ancient Stone</div>
+          <div class="vm-desc">Applied by hand to impermanent surfaces. Gold as devotion, not decoration. That which decorates the sacred teaches what is sacred.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #E0C060 0%, #C9A84C 50%, #9A7828 100%);">
+          <div class="vm-tag">Colour 01</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Temple Gold</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(20,30,60,0.28)), url('https://images.unsplash.com/photo-1563492065-e6b62e2e06ea?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Location</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Mekong at Dusk</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(60,40,0,0.28)), url('https://images.unsplash.com/photo-1567689265664-6e9c50a7cf7f?fm=jpg&q=80&w=800&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">Pattern</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Naga Scale</div>
+        </div>
+
+        <div class="vm-cell vm-wide" style="background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1582560474992-385ebb9b6e9e?fm=jpg&q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;">
+          <div class="vm-tag">The Attendee</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(16px, 2.2vw, 26px);">The Threshold Crosser</div>
+          <div class="vm-desc">Not adventurous for the sake of stories. Crosses thresholds because staying is no longer possible. This festival is a crossing point, not a destination.</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: linear-gradient(160deg, #182810 0%, #0C1808 50%, #060C04 100%);">
+          <div class="vm-tag">Colour 02</div>
+          <div class="vm-name" style="font-size: clamp(14px, 1.8vw, 18px);">Northern Forest</div>
+        </div>
+
+        <div class="vm-cell vm-sm" style="background: #070500; overflow: hidden;">
+          <div class="vm-ghost" style="font-family: 'Cormorant Garamond', serif; font-style: italic; color: #C9A84C;">N</div>
+          <div class="vm-tag">Typography</div>
+          <div class="vm-name" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(14px, 1.8vw, 18px);">Cormorant Garamond Italic</div>
+        </div>
+
+        <div class="vm-cell vm-wide vm-quote" style="background: radial-gradient(ellipse at 70% 30%, rgba(201,168,76,0.1) 0%, transparent 50%), #0A0800;">
+          <div class="vm-quote-text" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2.2vw, 28px);">"The serpent does not guard the path to keep you out. It guards the path to ensure you arrive changed."</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="brand-footer" style="background: #060E0A;">
+      <div class="footer-name" style="font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; color: rgba(237,245,240,0.06);">NAGA</div>
+      <div class="footer-meta">Edition I · Thailand · 2026<br>Class 41 · Entertainment Services<br>⚠ Trademark: Caution — Attorney Review Required</div>
+    </div>
+
+  </section><!-- /naga -->
+
+
+  <script>
+    const BRAND_IDS = ['akasha','tessera','musubi','kumomi','luvsic','naga'];
+
+    function activate(target) {
+      document.querySelectorAll('.brand-book').forEach(b => b.classList.remove('active'));
+      const book = document.getElementById(target);
+      if (book) book.classList.add('active');
+      const sel = document.getElementById('brand-select');
+      if (sel) sel.value = target;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', e => {
+      const sel = document.getElementById('brand-select');
+      const idx = BRAND_IDS.indexOf(sel ? sel.value : 'akasha');
+      if (e.key === 'ArrowRight' && idx < BRAND_IDS.length - 1) activate(BRAND_IDS[idx + 1]);
+      if (e.key === 'ArrowLeft' && idx > 0) activate(BRAND_IDS[idx - 1]);
+    });
+  </script>
+
+</body>
+</html>

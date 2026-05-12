@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festival Brand Review — Tayseer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --panel-w: 420px;
+    --bg: #0A0A0E;
+    --surface: #14141A;
+    --surface2: #1C1C26;
+    --border: rgba(255,255,255,0.09);
+    --text: #F2EFE8;
+    --muted: rgba(242,239,232,0.55);
+    --heart: #E8546A;
+    --x-color: #9090B8;
+    --green: #4FBF8A;
+    --yellow: #E8C46A;
+    --r: 10px;
+    --panel-z: 100;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  /* ── Layout ── */
+  #app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #frame-wrap {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    transition: margin-right 0.3s ease;
+  }
+
+  #frame-wrap.panel-open {
+    margin-right: var(--panel-w);
+  }
+
+  #brand-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* ── Panel toggle button ── */
+  #panel-toggle {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: calc(var(--panel-z) + 1);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: var(--r) 0 0 var(--r);
+    width: 32px;
+    height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: background 0.2s, right 0.3s;
+    color: var(--muted);
+  }
+
+  #panel-toggle.panel-open {
+    right: var(--panel-w);
+  }
+
+  #panel-toggle:hover { background: #28283A; color: var(--text); }
+
+  #panel-toggle svg { flex-shrink: 0; }
+
+  #panel-toggle .toggle-label {
+    writing-mode: vertical-rl;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── Review Panel ── */
+  #review-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: var(--panel-w);
+    height: 100vh;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: var(--panel-z);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+  #review-panel.open {
+    transform: translateX(0);
+  }
+
+  /* Panel header */
+  .panel-header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .panel-sub {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .panel-date {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* Panel body */
+  .panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface2) transparent;
+  }
+
+  .panel-body::-webkit-scrollbar { width: 4px; }
+  .panel-body::-webkit-scrollbar-track { background: transparent; }
+  .panel-body::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+
+  /* Brand accordion */
+  .brand-group { border-bottom: 1px solid var(--border); }
+
+  .brand-trigger {
+    width: 100%;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+    text-align: left;
+    transition: background 0.15s;
+  }
+
+  .brand-trigger:hover { background: rgba(255,255,255,0.04); }
+
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  .brand-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .brand-score {
+    font-size: 13px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .brand-chevron {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+
+  .brand-group.open .brand-chevron { transform: rotate(90deg); }
+
+  /* Sections inside brand */
+  .brand-sections {
+    display: none;
+    padding: 4px 0 12px;
+  }
+
+  .brand-group.open .brand-sections { display: block; }
+
+  .section-row {
+    padding: 12px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-name {
+    font-size: 15px;
+    color: var(--muted);
+    flex: 1;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .vote-btns {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .vote-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .vote-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+  .vote-btn.heart.active {
+    background: rgba(232,84,106,0.15);
+    border-color: var(--heart);
+    color: var(--heart);
+  }
+
+  .vote-btn.x.active {
+    background: rgba(136,136,168,0.12);
+    border-color: var(--x-color);
+    color: var(--x-color);
+  }
+
+  .comment-wrap {
+    display: none;
+  }
+
+  .comment-wrap.visible { display: block; }
+
+  .comment-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 11px 14px;
+    resize: vertical;
+    min-height: 88px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .comment-input::placeholder { color: rgba(242,239,232,0.28); }
+  .comment-input:focus { border-color: rgba(255,255,255,0.22); }
+
+  .add-comment-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: transparent;
+    transition: color 0.15s, text-decoration-color 0.15s;
+  }
+
+  .add-comment-btn:hover {
+    color: var(--text);
+    text-decoration-color: var(--text);
+  }
+
+  /* Panel footer */
+  .panel-footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .progress-bar-wrap {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 5px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--heart), var(--yellow));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    text-align: center;
+  }
+
+  .copy-btn:hover { background: #24243A; border-color: rgba(255,255,255,0.18); }
+  .copy-btn.copied { color: var(--green); border-color: rgba(79,191,138,0.4); }
+
+  /* ── Welcome overlay (first visit) ── */
+  #welcome {
+    position: fixed;
+    inset: 0;
+    background: rgba(14,14,18,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #welcome.hidden { display: none; }
+
+  .welcome-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .welcome-icon { font-size: 44px; margin-bottom: 20px; }
+
+  .welcome-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .welcome-body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .welcome-name-wrap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .welcome-name-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text);
+    font-size: 17px;
+    padding: 13px 16px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+
+  .welcome-name-input:focus { border-color: rgba(255,255,255,0.28); }
+  .welcome-name-input::placeholder { color: rgba(242,239,232,0.28); }
+
+  .welcome-start-btn {
+    flex-shrink: 0;
+    background: #5B4AF7;
+    border: none;
+    border-radius: var(--r);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 13px 24px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .welcome-start-btn:hover { background: #6B5BFF; }
+
+  .welcome-hint {
+    font-size: 13px;
+    color: var(--muted);
+    opacity: 0.65;
+  }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 15px;
+    color: var(--text);
+    opacity: 0;
+    transition: all 0.25s ease;
+    z-index: 300;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    :root { --panel-w: 340px; }
+    .welcome-title { font-size: 22px; }
+    .welcome-card { padding: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Welcome Overlay -->
+<div id="welcome">
+  <div class="welcome-card">
+    <div class="welcome-icon">🎪</div>
+    <h1 class="welcome-title">Festival Brand Review</h1>
+    <p class="welcome-body">
+      You've been invited to review six brand directions for your upcoming festival.
+      Browse each concept and use the panel on the right to share your thoughts.
+      Heart what you love. Mark what doesn't fit. Leave comments anywhere.
+    </p>
+    <div class="welcome-name-wrap">
+      <input
+        type="text"
+        class="welcome-name-input"
+        id="reviewer-name-input"
+        placeholder="Your name (e.g. Tayseer)"
+        maxlength="50"
+      />
+      <button class="welcome-start-btn" onclick="startReview()">Start</button>
+    </div>
+    <p class="welcome-hint">Your feedback saves automatically. No account needed.</p>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app">
+  <div id="frame-wrap">
+    <iframe id="brand-frame" src="brand-books.html" title="Festival Brand Books"></iframe>
+  </div>
+</div>
+
+<!-- Panel Toggle Button -->
+<button id="panel-toggle" class="panel-open" onclick="togglePanel()" title="Toggle review panel">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="toggle-label">Review</span>
+</button>
+
+<!-- Review Panel -->
+<div id="review-panel" class="open">
+  <div class="panel-header">
+    <div class="panel-title">Client Review</div>
+    <div class="panel-sub" id="panel-reviewer-name">Festival Brand</div>
+    <div class="panel-date" id="panel-date"></div>
+  </div>
+
+  <div class="panel-body" id="panel-body">
+    <!-- Injected by JS -->
+  </div>
+
+  <div class="panel-footer">
+    <div class="progress-label">
+      <span id="progress-text">0 of 42 sections reviewed</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <button class="copy-btn" id="copy-btn" onclick="copyReview()">
+      Copy Review Summary
+    </button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const BRANDS = [
+  {
+    id: 'akasha',
+    name: 'AKASHA',
+    color: '#9B6FFF',
+    tagline: 'Space, Memory, Cosmos',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+  {
+    id: 'tessera',
+    name: 'TESSERA',
+    color: '#C4622D',
+    tagline: 'The Mosaic, The Fragment',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+  {
+    id: 'musubi',
+    name: 'MUSUBI',
+    color: '#C41E3A',
+    tagline: 'Thread, Tie, Knot',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+  {
+    id: 'kumomi',
+    name: 'KUMOMI',
+    color: '#7AA8CC',
+    tagline: 'Cloud, Sky, Open',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+  {
+    id: 'luvsic',
+    name: 'LUVSIC',
+    color: '#FF8C42',
+    tagline: 'Love, Music, Feeling',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+  {
+    id: 'naga',
+    name: 'NAGA',
+    color: '#C9A84C',
+    tagline: 'Serpent, Threshold, Power',
+    sections: ['Overall Direction','Color Palette','Typography','The Experience','The People','Vision Board'],
+  },
+];
+
+const STORAGE_KEY = 'festival-review-v2';
+let state = { reviewer: '', votes: {}, comments: {}, openBrands: ['akasha'] };
+let panelOpen = true;
+
+// ── Init ──
+function init() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    } catch(e) {}
+  }
+
+  if (state.reviewer) {
+    document.getElementById('welcome').classList.add('hidden');
+    document.getElementById('reviewer-name-input').value = state.reviewer;
+    applyReviewer();
+  }
+
+  renderPanel();
+  updateProgress();
+  setPanelDate();
+}
+
+function setPanelDate() {
+  const d = new Date();
+  document.getElementById('panel-date').textContent = d.toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+function startReview() {
+  const name = document.getElementById('reviewer-name-input').value.trim();
+  if (!name) {
+    document.getElementById('reviewer-name-input').focus();
+    return;
+  }
+  state.reviewer = name;
+  save();
+  applyReviewer();
+  document.getElementById('welcome').classList.add('hidden');
+}
+
+function applyReviewer() {
+  document.getElementById('panel-reviewer-name').textContent = state.reviewer + "'s Review";
+}
+
+// Allow Enter key on name input
+document.getElementById('reviewer-name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startReview();
+});
+
+// ── Panel toggle ──
+function togglePanel() {
+  panelOpen = !panelOpen;
+  const panel = document.getElementById('review-panel');
+  const toggle = document.getElementById('panel-toggle');
+  const frameWrap = document.getElementById('frame-wrap');
+  panel.classList.toggle('open', panelOpen);
+  toggle.classList.toggle('panel-open', panelOpen);
+  frameWrap.classList.toggle('panel-open', panelOpen);
+}
+
+// ── Render ──
+function renderPanel() {
+  const body = document.getElementById('panel-body');
+  body.innerHTML = BRANDS.map(brand => renderBrand(brand)).join('');
+}
+
+function renderBrand(brand) {
+  const isOpen = state.openBrands.includes(brand.id);
+  const voteCount = brand.sections.filter(s => getVote(brand.id, s) !== null).length;
+  const scoreText = voteCount > 0 ? `${voteCount}/${brand.sections.length}` : '';
+
+  return `
+    <div class="brand-group ${isOpen ? 'open' : ''}" id="brand-group-${brand.id}">
+      <button class="brand-trigger" onclick="toggleBrand('${brand.id}')">
+        <span class="brand-dot" style="background:${brand.color}"></span>
+        <span class="brand-name" style="color:${brand.color}">${brand.name}</span>
+        <span class="brand-score">${scoreText}</span>
+        <svg class="brand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+      <div class="brand-sections">
+        ${brand.sections.map(s => renderSection(brand, s)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSection(brand, sectionName) {
+  const key = sectionKey(brand.id, sectionName);
+  const vote = getVote(brand.id, sectionName);
+  const comment = state.comments[key] || '';
+  const commentVisible = comment.length > 0;
+
+  return `
+    <div class="section-row" id="row-${key}">
+      <div class="section-header">
+        <span class="section-name">${sectionName}</span>
+        <div class="vote-btns">
+          <button
+            class="vote-btn heart ${vote === 'heart' ? 'active' : ''}"
+            onclick="setVote('${brand.id}','${sectionName}','heart')"
+            title="Love it"
+          >♥</button>
+          <button
+            class="vote-btn x ${vote === 'x' ? 'active' : ''}"
+            onclick="setVote('${brand.id}','${sectionName}','x')"
+            title="Not for me"
+          >✕</button>
+        </div>
+      </div>
+      <div class="comment-wrap ${commentVisible ? 'visible' : ''}" id="comment-wrap-${key}">
+        <textarea
+          class="comment-input"
+          id="comment-${key}"
+          placeholder="Add a note about ${sectionName.toLowerCase()}..."
+          oninput="saveComment('${brand.id}','${sectionName}',this.value)"
+        >${comment}</textarea>
+      </div>
+      <button
+        class="add-comment-btn"
+        id="comment-btn-${key}"
+        onclick="toggleComment('${brand.id}','${sectionName}')"
+      >${commentVisible ? 'Hide note' : '+ Add note'}</button>
+    </div>
+  `;
+}
+
+// ── Brand accordion ──
+function toggleBrand(brandId) {
+  const idx = state.openBrands.indexOf(brandId);
+  if (idx >= 0) {
+    state.openBrands.splice(idx, 1);
+  } else {
+    state.openBrands.push(brandId);
+  }
+  save();
+  const group = document.getElementById(`brand-group-${brandId}`);
+  group.classList.toggle('open', state.openBrands.includes(brandId));
+}
+
+// ── Votes ──
+function sectionKey(brandId, sectionName) {
+  return `${brandId}__${sectionName.toLowerCase().replace(/\s+/g,'-')}`;
+}
+
+function getVote(brandId, sectionName) {
+  return state.votes[sectionKey(brandId, sectionName)] || null;
+}
+
+function setVote(brandId, sectionName, voteType) {
+  const key = sectionKey(brandId, sectionName);
+  const current = state.votes[key];
+  // Toggle off if clicking same vote
+  if (current === voteType) {
+    delete state.votes[key];
+  } else {
+    state.votes[key] = voteType;
+  }
+  save();
+  // Re-render just the affected row
+  const row = document.getElementById(`row-${key}`);
+  const brand = BRANDS.find(b => b.id === brandId);
+  row.outerHTML = renderSection(brand, sectionName);
+  // Re-render the brand group header score
+  const scoreEl = document.querySelector(`#brand-group-${brandId} .brand-score`);
+  const voteCount = brand.sections.filter(s => getVote(brandId, s) !== null).length;
+  if (scoreEl) scoreEl.textContent = voteCount > 0 ? `${voteCount}/${brand.sections.length}` : '';
+  updateProgress();
+}
+
+// ── Comments ──
+function toggleComment(brandId, sectionName) {
+  const key = sectionKey(brandId, sectionName);
+  const wrap = document.getElementById(`comment-wrap-${key}`);
+  const btn = document.getElementById(`comment-btn-${key}`);
+  const isVisible = wrap.classList.contains('visible');
+  wrap.classList.toggle('visible', !isVisible);
+  btn.textContent = isVisible ? '+ Add note' : 'Hide note';
+  if (!isVisible) {
+    const ta = document.getElementById(`comment-${key}`);
+    if (ta) ta.focus();
+  }
+}
+
+function saveComment(brandId, sectionName, value) {
+  const key = sectionKey(brandId, sectionName);
+  if (value.trim()) {
+    state.comments[key] = value;
+  } else {
+    delete state.comments[key];
+  }
+  save();
+}
+
+// ── Progress ──
+function updateProgress() {
+  const total = BRANDS.reduce((sum, b) => sum + b.sections.length, 0);
+  const reviewed = Object.keys(state.votes).length;
+  const pct = total > 0 ? Math.round((reviewed / total) * 100) : 0;
+  document.getElementById('progress-text').textContent = `${reviewed} of ${total} sections reviewed`;
+  document.getElementById('progress-pct').textContent = `${pct}%`;
+  document.getElementById('progress-fill').style.width = `${pct}%`;
+}
+
+// ── Persist ──
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ── Copy summary ──
+function copyReview() {
+  const lines = [];
+  const now = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+
+  lines.push(`FESTIVAL BRAND REVIEW — ${(state.reviewer || 'Client').toUpperCase()}`);
+  lines.push(`Date: ${now}`);
+  lines.push('');
+
+  let anyContent = false;
+
+  BRANDS.forEach(brand => {
+    const brandLines = [];
+    brand.sections.forEach(s => {
+      const vote = getVote(brand.id, s);
+      const comment = state.comments[sectionKey(brand.id, s)] || '';
+      if (vote || comment) {
+        anyContent = true;
+        const voteEmoji = vote === 'heart' ? '♥ Love it' : vote === 'x' ? '✕ Not right' : '';
+        let line = `  ${s}`;
+        if (voteEmoji) line += `  [${voteEmoji}]`;
+        brandLines.push(line);
+        if (comment) brandLines.push(`    Note: ${comment.trim()}`);
+      }
+    });
+
+    if (brandLines.length > 0) {
+      lines.push(`── ${brand.name} (${brand.tagline}) ──`);
+      lines.push(...brandLines);
+      lines.push('');
+    }
+  });
+
+  if (!anyContent) {
+    showToast('No reviews yet. Heart or X some sections first.');
+    return;
+  }
+
+  lines.push('──────────────────────────────');
+  lines.push('Generated via Festival Brand Review Tool');
+
+  const text = lines.join('\n');
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    showToast('Review summary copied to clipboard.');
+    setTimeout(() => {
+      btn.textContent = 'Copy Review Summary';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    // Fallback for non-https
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Review summary copied.');
+  });
+}
+
+// ── Toast ──
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── Start ──
+init();
+</script>
+</body>
+</html>
